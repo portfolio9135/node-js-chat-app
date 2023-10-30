@@ -23,8 +23,19 @@ app.get("/", (req, res)=>  {
   res.sendFile(__dirname + "/index.html");
 })
 
+
+io.on("connection", (socket)=>  {
+  console.log("ユーザーが接続しましたーーー");
+
+  socket.on("chat message", (msg)=>  {
+    console.log(`メッセージ : ${msg}`);
+    io.emit("chat message", msg)
+  })
+})
+
 //作ったサーバーを起動して3000ポートでリクエストを待ってサーバーが起動したらコンソールにメッセージを表示する
 server.listen(port, ()=> {
   console.log("サーバーが起動しましたー");
 });
+
 
